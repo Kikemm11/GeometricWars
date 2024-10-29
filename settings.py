@@ -26,11 +26,15 @@ BASE_DIR = pathlib.Path(__file__).parent
 
 CIRCLE_PLAYER_WIDTH = 37
 CIRCLE_PLAYER_HEIGHT = 35
+CIRCLE_PLAYER_VX = 30
+CIRCLE_PLAYER_VY = 30
 
 # Square player size
 
 SQUARE_PLAYER_WIDTH = 39
 SQUARE_PLAYER_HEIGHT = 46
+SQUARE_PLAYER_VX = 30
+SQUARE_PLAYER_VY = 30
 
 TEXTURES = {
     "background": pygame.image.load(BASE_DIR / "assets" / "textures" / "background.png"),

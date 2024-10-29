@@ -5,8 +5,8 @@ from gale.state import BaseState
 from gale.text import Text, render_text
 
 import settings
-from src.definitions.players import PLAYER
 from src.Player import Player
+from src.CirclePlayer import CirclePlayer
 
 
 class StartState(BaseState):
@@ -23,14 +23,15 @@ class StartState(BaseState):
 
         self.selected = 1
 
-        self.circle_player = Player(PLAYER["circle"])
-        self.circle_player.change_state("idle")
+        self.circle_player = CirclePlayer(1, settings.VIRTUAL_HEIGHT - 50)
+        self.circle_player.change_state("walk-right")
         
     def exit(self) -> None:
         pass
 
     def update(self, dt: float) -> None:
         self.circle_player.update(dt)
+        self.erratic_player(self.circle_player)
 
     def render(self, surface: pygame.Surface) -> None:
 
@@ -72,6 +73,7 @@ class StartState(BaseState):
 
         self.circle_player.render(surface)
 
+
     def on_input(self, input_id: str, input_data: InputData) -> None:
         if input_id == "move_down" and input_data.pressed:
             self.selected = 2 if self.selected == 1 else 1
@@ -81,3 +83,14 @@ class StartState(BaseState):
             print("Enter")
 
         self.circle_player.on_input(input_id, input_data)
+
+
+    def erratic_player(self, player:Player):
+
+        if player.vx > 0 and player.x + player.width >= settings.VIRTUAL_WIDTH//2:
+            player.change_state("walk-left")
+            
+        if player.vx < 0 and player.x <= 0:
+            player.change_state("walk-right")
+          
+        
