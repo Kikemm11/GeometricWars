@@ -7,6 +7,7 @@ from gale.text import Text, render_text
 import settings
 from src.Player import Player
 from src.CirclePlayer import CirclePlayer
+from src.SquarePlayer import SquarePlayer
 
 
 class StartState(BaseState):
@@ -25,13 +26,18 @@ class StartState(BaseState):
 
         self.circle_player = CirclePlayer(1, settings.VIRTUAL_HEIGHT - 50)
         self.circle_player.change_state("walk-right")
+
+        self.square_player = SquarePlayer(settings.VIRTUAL_WIDTH - settings.SQUARE_PLAYER_WIDTH - 1, settings.VIRTUAL_HEIGHT - 50)
+        self.square_player.change_state("walk-left")
         
     def exit(self) -> None:
         pass
 
     def update(self, dt: float) -> None:
         self.circle_player.update(dt)
-        self.erratic_player(self.circle_player)
+        self.square_player.update(dt)
+
+        self.erratic_players(self.circle_player, self.square_player)
 
     def render(self, surface: pygame.Surface) -> None:
 
@@ -72,6 +78,7 @@ class StartState(BaseState):
         )
 
         self.circle_player.render(surface)
+        self.square_player.render(surface)
 
 
     def on_input(self, input_id: str, input_data: InputData) -> None:
@@ -82,15 +89,21 @@ class StartState(BaseState):
         elif input_id == "enter" and input_data.pressed:
             print("Enter")
 
-        self.circle_player.on_input(input_id, input_data)
 
+    def erratic_players(self, circle_player:Player, square_player:Player):
 
-    def erratic_player(self, player:Player):
-
-        if player.vx > 0 and player.x + player.width >= settings.VIRTUAL_WIDTH//2:
-            player.change_state("walk-left")
+        if circle_player.vx > 0 and circle_player.x + circle_player.width >= settings.VIRTUAL_WIDTH//2:
+            circle_player.change_state("walk-left")
             
-        if player.vx < 0 and player.x <= 0:
-            player.change_state("walk-right")
+        if circle_player.vx < 0 and circle_player.x <= 0:
+            circle_player.change_state("walk-right")
+
+        if square_player.vx > 0 and square_player.x + square_player.width >= settings.VIRTUAL_WIDTH:
+            square_player.change_state("walk-left")
+
+        if square_player.vx < 0 and square_player.x <= settings.VIRTUAL_WIDTH//2:
+            square_player.change_state("walk-right")
+
+        
           
         

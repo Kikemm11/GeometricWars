@@ -35,13 +35,19 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
         self.state_machine.change(state_id, *args, **kwargs)
 
     def update(self, dt: float) -> None:
+
         self.state_machine.update(dt)
         mixins.AnimatedMixin.update(self, dt)
-        self.y += self.vy * dt
 
+        next_y = self.y + self.y * dt
         next_x = self.x + self.vx * dt
 
         if self.vx < 0:
             self.x = max(0, next_x)
         else:
             self.x = min(settings.VIRTUAL_WIDTH - self.width, next_x)
+
+        if self.vy < 0: 
+            self.y = max(0, next_y)
+        else:
+            self.y = min(settings.VIRTUAL_HEIGHT - self.height, next_y)
