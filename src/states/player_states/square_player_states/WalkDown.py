@@ -12,10 +12,10 @@ class WalkDown(BaseEntityState):
 
     def on_input(self, input_id: str, input_data: InputData) -> None:
         if input_id == "move_left" and input_data.pressed:
-            print("Move left")
+            self.entity.change_state("walk-left")
         elif input_id == "move_right" and input_data.pressed:
-            print("Move right")
+            self.entity.change_state("walk-right")
         elif input_id == "move_up" and input_data.pressed:
-            print("Move up")
-        elif input_id == "move_down" and input_data.pressed:
-            print("Move down")    
+            self.entity.change_state("walk-up")
+        elif input_id == "move_down" and input_data.released:
+            self.entity.change_state("idle")

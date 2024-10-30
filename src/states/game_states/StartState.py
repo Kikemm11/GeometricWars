@@ -84,10 +84,16 @@ class StartState(BaseState):
     def on_input(self, input_id: str, input_data: InputData) -> None:
         if input_id == "move_down" and input_data.pressed:
             self.selected = 2 if self.selected == 1 else 1
+
         elif input_id == "move_up" and input_data.pressed:
             self.selected = 1 if self.selected == 2 else 2
+
         elif input_id == "enter" and input_data.pressed:
-            print("Enter")
+            
+            if self.selected == 1:
+                self.state_machine.change("playstate")
+            else:
+                print("Instructions")
 
 
     def erratic_players(self, circle_player:Player, square_player:Player):

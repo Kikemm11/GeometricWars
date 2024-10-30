@@ -1,0 +1,56 @@
+import pygame
+
+from gale.input_handler import InputData
+from gale.state import BaseState
+from gale.text import Text, render_text
+
+import settings
+from src.Player import Player
+from src.Map import Map
+from src.CirclePlayer import CirclePlayer
+from src.SquarePlayer import SquarePlayer
+
+
+class PlayState(BaseState):
+
+    def enter(self) -> None:
+        self.title = Text(
+            "Geometric Wars",
+            settings.FONTS["medium"],
+            settings.VIRTUAL_WIDTH,
+            settings.VIRTUAL_HEIGHT // 4,
+            (197, 195, 198),
+            shadowed=True,
+        )
+
+        self.map = Map()
+
+        self.circle_player = CirclePlayer(1, settings.VIRTUAL_HEIGHT // 2 - settings.CIRCLE_PLAYER_HEIGHT//2)
+        self.circle_player.change_state("idle")
+
+        self.square_player = SquarePlayer(settings.VIRTUAL_WIDTH - settings.SQUARE_PLAYER_WIDTH - 1, settings.VIRTUAL_HEIGHT // 2 - settings.SQUARE_PLAYER_HEIGHT//2)
+        self.square_player.change_state("idle")
+        
+
+    def update(self, dt: float) -> None:
+        self.circle_player.update(dt)
+        self.square_player.update(dt)
+
+        self.check_players_collision(self.circle_player, self.square_player)
+
+
+    def render(self, surface: pygame.Surface) -> None:
+        self.map.render(surface)
+        self.circle_player.render(surface)
+        self.square_player.render(surface)
+
+
+    def on_input(self, input_id: str, input_data: InputData) -> None:
+        self.circle_player.on_input(input_id, input_data)
+        self.square_player.on_input(input_id, input_data)
+
+
+    def check_players_collision(self, circle_player, square_player):
+        if circle_player.collides(square_player) or square_player.collides(circle_player):
+            circle_player.vx = square_player.vx = 0
+            circle_player.vy = square_player.vy = 0

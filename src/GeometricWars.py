@@ -12,6 +12,7 @@ class GeometricWars(Game):
         self.state_machine = StateMachine(
             {
                 "start": game_states.StartState,
+                "playstate": game_states.PlayState,
             }
         )
         self.state_machine.change("start")

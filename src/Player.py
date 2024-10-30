@@ -39,7 +39,7 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
         self.state_machine.update(dt)
         mixins.AnimatedMixin.update(self, dt)
 
-        next_y = self.y + self.y * dt
+        next_y = self.y + self.vy * dt
         next_x = self.x + self.vx * dt
 
         if self.vx < 0:

@@ -11,11 +11,11 @@ class WalkRight(BaseEntityState):
         self.entity.change_animation("walk-right")
 
     def on_input(self, input_id: str, input_data: InputData) -> None:
-        if input_id == "move_left" and input_data.pressed:
-            print("Move left")
-        elif input_id == "move_right" and input_data.pressed:
-            print("Move right")
-        elif input_id == "move_up" and input_data.pressed:
-            print("Move up")
-        elif input_id == "move_down" and input_data.pressed:
-            print("Move down")    
+        if input_id == "move_left_2" and input_data.pressed:
+            self.entity.change_state("walk-left")
+        elif input_id == "move_right_2" and input_data.released:
+            self.entity.change_state("idle")
+        elif input_id == "move_up_2" and input_data.pressed:
+            self.entity.change_state("walk-up")
+        elif input_id == "move_down_2" and input_data.pressed:
+            self.entity.change_state("walk-down") 
