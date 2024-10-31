@@ -53,5 +53,15 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
             self.y = min(settings.VIRTUAL_HEIGHT - self.height, next_y)
 
     def solve_world_collide(self):
-        self.vx *= -0.5
-        self.vy *= -0.5
+        
+        if self.vx > 0:
+            self.x -= 0.5
+        elif self.vx < 0:
+            self.x += 0.5
+        elif self.vy > 0:
+            self.y -= 0.5
+        elif self.vy < 0:
+            self.y += 0.5
+            
+            
+            
