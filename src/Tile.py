@@ -1,3 +1,4 @@
+import pygame
 import settings
 
 
@@ -6,9 +7,12 @@ class Tile():
         self.size = settings.TILE_SIZE
         self.x = x * self.size
         self.y = y * self.size
-        self.frame = frame
-        self.occupied = False 
+        self.texture = settings.TEXTURES["tilesheet"]
+        self.frame = settings.FRAMES["tilesheet"][frame]
+        self.occupied = False
 
     def render(self, surface):
-        texture = settings.TEXTURES["tilesheet"]
-        surface.blit(texture, (self.x, self.y), settings.FRAMES["tilesheet"][self.frame])
+        surface.blit(self.texture, (self.x, self.y), self.frame)
+
+    def get_collision_rect(self) -> pygame.Rect:
+        return pygame.Rect(self.x, self.y, self.size, self.size)

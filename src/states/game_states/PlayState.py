@@ -25,10 +25,10 @@ class PlayState(BaseState):
 
         self.map = Map()
 
-        self.circle_player = CirclePlayer(1, settings.VIRTUAL_HEIGHT // 2 - settings.CIRCLE_PLAYER_HEIGHT//2)
+        self.circle_player = CirclePlayer(settings.TILE_SIZE + 1, settings.VIRTUAL_HEIGHT // 2 - settings.CIRCLE_PLAYER_HEIGHT//2)
         self.circle_player.change_state("idle")
 
-        self.square_player = SquarePlayer(settings.VIRTUAL_WIDTH - settings.SQUARE_PLAYER_WIDTH - 1, settings.VIRTUAL_HEIGHT // 2 - settings.SQUARE_PLAYER_HEIGHT//2)
+        self.square_player = SquarePlayer(settings.VIRTUAL_WIDTH - settings.SQUARE_PLAYER_WIDTH - settings.TILE_SIZE - 1, settings.VIRTUAL_HEIGHT // 2 - settings.SQUARE_PLAYER_HEIGHT//2)
         self.square_player.change_state("idle")
         
 
@@ -37,6 +37,12 @@ class PlayState(BaseState):
         self.square_player.update(dt)
 
         self.check_players_collision(self.circle_player, self.square_player)
+
+        if self.check_player_sides_collision(self.circle_player) or self.check_player_obstacle_collision(self.circle_player):
+            self.circle_player.solve_world_collide()
+
+        if self.check_player_sides_collision(self.square_player) or self.check_player_obstacle_collision(self.square_player):
+            self.square_player.solve_world_collide()
 
 
     def render(self, surface: pygame.Surface) -> None:
@@ -54,3 +60,15 @@ class PlayState(BaseState):
         if circle_player.collides(square_player) or square_player.collides(circle_player):
             circle_player.vx = square_player.vx = 0
             circle_player.vy = square_player.vy = 0
+
+    def check_player_sides_collision(self, player):
+        for tile in self.map.collidable_tiles:
+            if player.collides(tile):
+                return True 
+        return False
+    
+    def check_player_obstacle_collision(self, player):
+        for obstacle in self.map.obstacles:
+            if player.collides(obstacle):
+                return True
+        return False

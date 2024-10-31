@@ -37,6 +37,16 @@ TILE_SIDE =  1
 TILE_FLOOR = [3,4,5,6,7,8,9]
 
 
+# Obstacle size
+
+OBSTACLE_WIDTH = 10
+OBSTACLE_HEIGHT = 14
+
+# Number of obstacles
+
+OBSTACLES = 45
+
+
 # Map size
 
 MAP_WIDTH = VIRTUAL_WIDTH // TILE_SIZE
@@ -45,15 +55,15 @@ MAP_HEIGHT = VIRTUAL_HEIGHT // TILE_SIZE
 
 # Circle player size
 
-CIRCLE_PLAYER_WIDTH = 37
-CIRCLE_PLAYER_HEIGHT = 35
+CIRCLE_PLAYER_WIDTH = 25
+CIRCLE_PLAYER_HEIGHT = 23
 CIRCLE_PLAYER_VX = 30
 CIRCLE_PLAYER_VY = 30
 
 # Square player size
 
-SQUARE_PLAYER_WIDTH = 37
-SQUARE_PLAYER_HEIGHT = 36
+SQUARE_PLAYER_WIDTH = 26
+SQUARE_PLAYER_HEIGHT = 25
 SQUARE_PLAYER_VX = 30
 SQUARE_PLAYER_VY = 30
 
@@ -62,12 +72,14 @@ TEXTURES = {
     "circle_player": pygame.image.load(BASE_DIR / "assets" / "textures" / "circle_player.png"),
     "square_player": pygame.image.load(BASE_DIR / "assets" / "textures" / "square_player.png"),
     "tilesheet": pygame.image.load(BASE_DIR / "assets" / "textures" / "tilesheet.png"),
+    "obstacle": pygame.image.load(BASE_DIR / "assets" / "textures" / "obstacle.png"),
 }
 
 FRAMES = {
     "circle_player": frames.generate_frames(TEXTURES["circle_player"], CIRCLE_PLAYER_WIDTH, CIRCLE_PLAYER_HEIGHT),
     "square_player": frames.generate_frames(TEXTURES["square_player"], SQUARE_PLAYER_WIDTH, SQUARE_PLAYER_HEIGHT),
     "tilesheet": frames.generate_frames(TEXTURES["tilesheet"], TILE_SIZE, TILE_SIZE),
+    "obstacle": frames.generate_frames(TEXTURES["obstacle"], OBSTACLE_WIDTH, OBSTACLE_HEIGHT),
 }
 
 pygame.mixer.init()
