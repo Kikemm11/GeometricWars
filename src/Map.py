@@ -20,7 +20,7 @@ class Map():
         for y in range(settings.MAP_HEIGHT):
             for x in range(settings.MAP_WIDTH):
                 frame = None
-                collidable = False
+                collidable = True
 
                 if y == 0 and x == 0:
                     frame = settings.TILE_CORNER
@@ -32,25 +32,25 @@ class Map():
                     frame = settings.TILE_CORNER
                 elif y == 0 or y == settings.MAP_HEIGHT-1 or x == 0 or x == settings.MAP_WIDTH-1:
                     frame = settings.TILE_SIDE
-                    collidable = True
                 else:
                     frame = random.choice(settings.TILE_FLOOR)
+                    collidable = False
 
                 tile = Tile(x, y, frame)
                 self.tiles.add(tile)
 
                 if collidable:
-                    tile.occupied = True
                     self.collidable_tiles.add(tile)
 
 
     def _generate_obstacles(self):
+        
+        floor_tiles = list(self.tiles - self.collidable_tiles)
+        
         for _ in range(settings.OBSTACLES):
-            possible_tiles = [tile for tile in self.tiles if not tile.occupied]
-            tile = random.choice(possible_tiles)
+            tile = random.choice(floor_tiles)
             obstacle = Obstacle(tile.x, tile.y)
-            tile.occupied = True
-
+           
             self.obstacles.add(obstacle)
 
 

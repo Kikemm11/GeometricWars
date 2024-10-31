@@ -56,12 +56,18 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
         
         if self.vx > 0:
             self.x -= 0.5
+            self.vx = 0
         elif self.vx < 0:
             self.x += 0.5
+            self.vx = 0
         elif self.vy > 0:
             self.y -= 0.5
+            self.vy = 0
         elif self.vy < 0:
             self.y += 0.5
+            self.vy = 0
+            
+        
             
             
             

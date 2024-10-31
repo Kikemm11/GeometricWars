@@ -25,10 +25,10 @@ class PlayState(BaseState):
 
         self.map = Map()
 
-        self.circle_player = CirclePlayer(settings.TILE_SIZE + 1, settings.VIRTUAL_HEIGHT // 2 - settings.CIRCLE_PLAYER_HEIGHT//2)
+        self.circle_player = CirclePlayer(settings.TILE_SIZE + 0.7, settings.VIRTUAL_HEIGHT // 2 - settings.CIRCLE_PLAYER_HEIGHT//8)
         self.circle_player.change_state("idle")
 
-        self.square_player = SquarePlayer(settings.VIRTUAL_WIDTH - settings.SQUARE_PLAYER_WIDTH - settings.TILE_SIZE - 1, settings.VIRTUAL_HEIGHT // 2 - settings.SQUARE_PLAYER_HEIGHT//2)
+        self.square_player = SquarePlayer(settings.VIRTUAL_WIDTH - settings.SQUARE_PLAYER_WIDTH - settings.TILE_SIZE - 0.5, settings.VIRTUAL_HEIGHT // 2 - settings.SQUARE_PLAYER_HEIGHT//8)
         self.square_player.change_state("idle")
         
 
