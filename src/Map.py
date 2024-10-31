@@ -11,24 +11,24 @@ class Map():
 
     def _build_map(self):
         
-        for i in range(settings.MAP_HEIGHT):
-            for j in range(settings.MAP_WIDTH):
+        for y in range(settings.MAP_HEIGHT):
+            for x in range(settings.MAP_WIDTH):
                 frame = None
 
-                if i == 0 and j == 0:
+                if y == 0 and x == 0:
                     frame = settings.TILE_CORNER
-                elif i == 0 and j == settings.MAP_WIDTH-1:
+                elif y == 0 and x == settings.MAP_WIDTH-1:
                     frame = settings.TILE_CORNER
-                elif i == settings.MAP_HEIGHT-1 and j == 0:
+                elif y == settings.MAP_HEIGHT-1 and x == 0:
                     frame = settings.TILE_CORNER
-                elif i == settings.MAP_HEIGHT-1 and j == settings.MAP_WIDTH-1:
+                elif y == settings.MAP_HEIGHT-1 and x == settings.MAP_WIDTH-1:
                     frame = settings.TILE_CORNER
-                elif i == 0 or i == settings.MAP_HEIGHT-1 or j == 0 or j == settings.MAP_WIDTH-1:
+                elif y == 0 or y == settings.MAP_HEIGHT-1 or x == 0 or x == settings.MAP_WIDTH-1:
                     frame = settings.TILE_SIDE
                 else:
                     frame = random.choice(settings.TILE_FLOOR)
 
-                tile = Tile(i, j, frame)
+                tile = Tile(x, y, frame)
                 self.tiles.append(tile)
 
 
