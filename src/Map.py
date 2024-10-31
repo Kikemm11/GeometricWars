@@ -1,9 +1,7 @@
-from typing import TypeVar, Dict, Any, Tuple
-
-from gale.state import StateMachine, BaseState
-from src import mixins
 import settings
 import random
+
+from src.Tile import Tile
 
 
 class Map():
@@ -30,11 +28,10 @@ class Map():
                 else:
                     frame = random.choice(settings.TILE_FLOOR)
 
-                self.tiles.append({'x': i * settings.TILE_SIZE, 'y': j * settings.TILE_SIZE, 'frame': frame })
+                tile = Tile(i, j, frame)
+                self.tiles.append(tile)
 
 
     def render(self, surface):
-        texture = settings.TEXTURES["tilesheet"]
-
         for tile in self.tiles:
-            surface.blit(texture, (tile['x'], tile['y']), settings.FRAMES["tilesheet"][tile['frame']])
+            tile.render(surface)
