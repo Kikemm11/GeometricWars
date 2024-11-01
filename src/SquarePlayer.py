@@ -8,6 +8,8 @@ from src.states.player_states.square_player_states import IdleState , WalkRight,
 import pygame
 import settings
 
+from src.ProjectileFactory import ProjectileFactory
+
 
 class SquarePlayer(Player):
     def __init__(self, x: int, y: int) -> None:
@@ -33,8 +35,15 @@ class SquarePlayer(Player):
             },
         )
 
+
     def on_input(self, input_id: str, input_data: InputData) -> None:
         self.state_machine.on_input(input_id, input_data)
+
+
+    def on_input_throw(self, input_id, input_data, map) -> None:
+        if input_id == "square_throw" and input_data.pressed:
+            ProjectileFactory.throw_projectile(map, self)
+
 
     def get_collision_rect(self) -> pygame.Rect:
         return pygame.Rect(self.x, self.y, self.width, self.height)

@@ -8,11 +8,11 @@ from src.Obstacle import Obstacle
 class Map():
     def __init__(self):
         self.tiles = set()
-        self.obstacles = set()
+        self.obstacles = []
         self.collidable_tiles = set()
+        self.projectiles = []
         self._build_map()
         self._generate_obstacles()
-
 
 
     def _build_map(self):
@@ -51,7 +51,12 @@ class Map():
             tile = random.choice(floor_tiles)
             obstacle = Obstacle(tile.x, tile.y)
            
-            self.obstacles.add(obstacle)
+            self.obstacles.append(obstacle)
+
+    def update(self, dt):
+        for projectile in self.projectiles:
+            collidable_objects = self.obstacles + list(self.collidable_tiles)
+            projectile.update(dt, collidable_objects, self)
 
 
     def render(self, surface):
@@ -60,3 +65,6 @@ class Map():
 
         for obstacle in self.obstacles:
             obstacle.render(surface)
+
+        for projectile in self.projectiles:
+            projectile.render(surface)

@@ -16,6 +16,8 @@ input_handler.InputHandler.set_keyboard_action(input_handler.KEY_w, "move_up_2")
 input_handler.InputHandler.set_keyboard_action(input_handler.KEY_s, "move_down_2")
 input_handler.InputHandler.set_keyboard_action(input_handler.KEY_a, "move_left_2")
 input_handler.InputHandler.set_keyboard_action(input_handler.KEY_d, "move_right_2")
+input_handler.InputHandler.set_keyboard_action(input_handler.KEY_f, "circle_throw")
+input_handler.InputHandler.set_keyboard_action(input_handler.KEY_RCTRL, "square_throw")
 
 
 # Size we want to emulate
@@ -42,6 +44,11 @@ TILE_FLOOR = [3,4,5,6,7,8,9]
 OBSTACLE_WIDTH = 9
 OBSTACLE_HEIGHT = 12
 
+# Projectile info
+
+PROJECTILE_SIZE = 12
+PROJECTILE_VELOCITY = 50
+
 # Number of obstacles
 
 OBSTACLES = 45
@@ -67,6 +74,7 @@ TEXTURES = {
     "square_player": pygame.image.load(BASE_DIR / "assets" / "textures" / "square_player.png"),
     "tilesheet": pygame.image.load(BASE_DIR / "assets" / "textures" / "tilesheet.png"),
     "obstacle": pygame.image.load(BASE_DIR / "assets" / "textures" / "obstacle.png"),
+    "projectile": pygame.image.load(BASE_DIR / "assets" / "textures" / "projectile.png"),
 }
 
 FRAMES = {
@@ -74,6 +82,7 @@ FRAMES = {
     "square_player": frames.generate_frames(TEXTURES["square_player"], PLAYER_WIDTH, PLAYER_HEIGHT),
     "tilesheet": frames.generate_frames(TEXTURES["tilesheet"], TILE_SIZE, TILE_SIZE),
     "obstacle": frames.generate_frames(TEXTURES["obstacle"], OBSTACLE_WIDTH, OBSTACLE_HEIGHT),
+    "projectile": frames.generate_frames(TEXTURES["projectile"], PROJECTILE_SIZE, PROJECTILE_SIZE),
 }
 
 pygame.mixer.init()
