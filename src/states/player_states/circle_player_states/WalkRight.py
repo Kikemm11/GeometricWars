@@ -6,7 +6,7 @@ import settings
 
 class WalkRight(BaseEntityState):
     def enter(self) -> None:
-        self.entity.vx = settings.CIRCLE_PLAYER_VX
+        self.entity.vx = settings.PLAYER_VX
         self.entity.vy = 0
         self.entity.change_animation("walk-right")
 

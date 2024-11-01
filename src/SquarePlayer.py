@@ -14,8 +14,8 @@ class SquarePlayer(Player):
         super().__init__(
             x,
             y,
-            settings.SQUARE_PLAYER_WIDTH,
-            settings.SQUARE_PLAYER_HEIGHT,
+            settings.PLAYER_WIDTH,
+            settings.PLAYER_HEIGHT,
             "square_player",
             states={
                 "idle": lambda sm: IdleState.IdleState(self, sm),

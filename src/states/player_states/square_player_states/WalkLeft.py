@@ -6,7 +6,7 @@ import settings
 
 class WalkLeft(BaseEntityState):
     def enter(self) -> None:
-        self.entity.vx = settings.SQUARE_PLAYER_VX * -1
+        self.entity.vx = settings.PLAYER_VX * -1
         self.entity.vy = 0
         self.entity.change_animation("walk-left")
 

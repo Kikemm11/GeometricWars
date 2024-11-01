@@ -7,7 +7,7 @@ import settings
 class WalkDown(BaseEntityState):
     def enter(self) -> None:
         self.entity.vx = 0
-        self.entity.vy = settings.CIRCLE_PLAYER_VY 
+        self.entity.vy = settings.PLAYER_VY 
         self.entity.change_animation("walk-down")
 
     def on_input(self, input_id: str, input_data: InputData) -> None:

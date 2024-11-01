@@ -27,7 +27,7 @@ class StartState(BaseState):
         self.circle_player = CirclePlayer(1, settings.VIRTUAL_HEIGHT - 50)
         self.circle_player.change_state("walk-right")
 
-        self.square_player = SquarePlayer(settings.VIRTUAL_WIDTH - settings.SQUARE_PLAYER_WIDTH - 1, settings.VIRTUAL_HEIGHT - 50)
+        self.square_player = SquarePlayer(settings.VIRTUAL_WIDTH - settings.PLAYER_WIDTH - 1, settings.VIRTUAL_HEIGHT - 50)
         self.square_player.change_state("walk-left")
         
     def exit(self) -> None:

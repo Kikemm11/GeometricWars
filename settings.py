@@ -53,19 +53,13 @@ MAP_WIDTH = VIRTUAL_WIDTH // TILE_SIZE
 MAP_HEIGHT = VIRTUAL_HEIGHT // TILE_SIZE
 
 
-# Circle player size
+# Player Info
 
-CIRCLE_PLAYER_WIDTH = 25
-CIRCLE_PLAYER_HEIGHT = 23
-CIRCLE_PLAYER_VX = 40
-CIRCLE_PLAYER_VY = 40
+PLAYER_WIDTH = 25
+PLAYER_HEIGHT = 23
+PLAYER_VX = 40
+PLAYER_VY = 40
 
-# Square player size
-
-SQUARE_PLAYER_WIDTH = 26
-SQUARE_PLAYER_HEIGHT = 25
-SQUARE_PLAYER_VX = 40
-SQUARE_PLAYER_VY = 40
 
 TEXTURES = {
     "background": pygame.image.load(BASE_DIR / "assets" / "textures" / "background.png"),
@@ -76,8 +70,8 @@ TEXTURES = {
 }
 
 FRAMES = {
-    "circle_player": frames.generate_frames(TEXTURES["circle_player"], CIRCLE_PLAYER_WIDTH, CIRCLE_PLAYER_HEIGHT),
-    "square_player": frames.generate_frames(TEXTURES["square_player"], SQUARE_PLAYER_WIDTH, SQUARE_PLAYER_HEIGHT),
+    "circle_player": frames.generate_frames(TEXTURES["circle_player"], PLAYER_WIDTH, PLAYER_HEIGHT),
+    "square_player": frames.generate_frames(TEXTURES["square_player"], PLAYER_WIDTH, PLAYER_HEIGHT),
     "tilesheet": frames.generate_frames(TEXTURES["tilesheet"], TILE_SIZE, TILE_SIZE),
     "obstacle": frames.generate_frames(TEXTURES["obstacle"], OBSTACLE_WIDTH, OBSTACLE_HEIGHT),
 }

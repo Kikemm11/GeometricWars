@@ -14,8 +14,8 @@ class CirclePlayer(Player):
         super().__init__(
             x,
             y,
-            settings.CIRCLE_PLAYER_WIDTH,
-            settings.CIRCLE_PLAYER_HEIGHT,
+            settings.PLAYER_WIDTH,
+            settings.PLAYER_HEIGHT,
             "circle_player",
             states={
                 "idle": lambda sm: IdleState.IdleState(self, sm),

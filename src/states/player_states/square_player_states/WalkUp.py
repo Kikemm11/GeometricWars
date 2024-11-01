@@ -7,7 +7,7 @@ import settings
 class WalkUp(BaseEntityState):
     def enter(self) -> None:
         self.entity.vx = 0
-        self.entity.vy = settings.SQUARE_PLAYER_VY * -1
+        self.entity.vy = settings.PLAYER_VY * -1
         self.entity.change_animation("walk-up")
 
     def on_input(self, input_id: str, input_data: InputData) -> None:
