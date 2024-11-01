@@ -11,6 +11,8 @@ class Map():
         self.obstacles = []
         self.collidable_tiles = set()
         self.projectiles = []
+        self.circle_tile = None
+        self.square_tile = None
         self._build_map()
         self._generate_obstacles()
 
@@ -39,6 +41,12 @@ class Map():
                 tile = Tile(x, y, frame)
                 self.tiles.add(tile)
 
+                if x == 1 and y == 5:
+                    self.circle_tile = tile
+                
+                if x == settings.MAP_WIDTH - 2 and y == 5:
+                    self.square_tile = tile
+
                 if collidable:
                     self.collidable_tiles.add(tile)
 
@@ -46,6 +54,8 @@ class Map():
     def _generate_obstacles(self):
         
         floor_tiles = list(self.tiles - self.collidable_tiles)
+        floor_tiles.remove(self.circle_tile)
+        floor_tiles.remove(self.square_tile)
         
         for _ in range(settings.OBSTACLES):
             tile = random.choice(floor_tiles)

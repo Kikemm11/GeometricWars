@@ -63,4 +63,5 @@ class Projectile(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMi
         if isinstance(object, Obstacle):
             map.obstacles.remove(object)
 
-        map.projectiles.remove(self)
+        if self in map.projectiles:
+            map.projectiles.remove(self)
