@@ -9,6 +9,7 @@ class Tile():
         self.y = y * self.size
         self.texture = settings.TEXTURES["tilesheet"]
         self.frame = settings.FRAMES["tilesheet"][frame]
+        self.occupied = False
 
     def render(self, surface):
         surface.blit(self.texture, (self.x, self.y), self.frame)

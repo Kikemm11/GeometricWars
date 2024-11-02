@@ -53,6 +53,13 @@ PROJECTILE_VELOCITY = 50
 
 OBSTACLES = 45
 
+# Items info
+
+CIRCLE_ITEM_SIZE = 8
+SQUARE_ITEM_WIDTH = 8
+SQUARE_ITEM_HEIGHT = 10
+ITEMS = 10
+
 
 # Map size
 
@@ -76,6 +83,8 @@ TEXTURES = {
     "tilesheet": pygame.image.load(BASE_DIR / "assets" / "textures" / "tilesheet.png"),
     "obstacle": pygame.image.load(BASE_DIR / "assets" / "textures" / "obstacle.png"),
     "projectile": pygame.image.load(BASE_DIR / "assets" / "textures" / "projectile.png"),
+    "circle_item": pygame.image.load(BASE_DIR / "assets" / "textures" / "circle_item.png"),
+    "square_item": pygame.image.load(BASE_DIR / "assets" / "textures" / "square_item.png"),
 }
 
 FRAMES = {
@@ -84,6 +93,8 @@ FRAMES = {
     "tilesheet": frames.generate_frames(TEXTURES["tilesheet"], TILE_SIZE, TILE_SIZE),
     "obstacle": frames.generate_frames(TEXTURES["obstacle"], OBSTACLE_WIDTH, OBSTACLE_HEIGHT),
     "projectile": frames.generate_frames(TEXTURES["projectile"], PROJECTILE_SIZE, PROJECTILE_SIZE),
+    "circle_item": frames.generate_frames(TEXTURES["circle_item"], CIRCLE_ITEM_SIZE, CIRCLE_ITEM_SIZE),
+    "square_item": frames.generate_frames(TEXTURES["square_item"], SQUARE_ITEM_WIDTH, SQUARE_ITEM_HEIGHT),
 }
 
 pygame.mixer.init()
