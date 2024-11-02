@@ -33,12 +33,14 @@ class CirclePlayer(Player):
 
 
     def on_input(self, input_id, input_data) -> None:
-        self.state_machine.on_input(input_id, input_data)
+        if not self.vulnerable:
+            self.state_machine.on_input(input_id, input_data)
 
 
     def on_input_throw(self, input_id, input_data, map) -> None:
-        if input_id == "circle_throw" and input_data.pressed:
-            ProjectileFactory.throw_projectile(map, self)
+        if not self.vulnerable:
+            if input_id == "circle_throw" and input_data.pressed:
+                ProjectileFactory.throw_projectile(map, self)
             
 
     def get_collision_rect(self) -> pygame.Rect:

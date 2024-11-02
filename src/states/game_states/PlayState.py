@@ -37,13 +37,26 @@ class PlayState(BaseState):
         self.square_player.update(dt)
         self.map.update(dt)
 
-        self.check_players_collision(self.circle_player, self.square_player)
+        if self.check_players_collision(self.circle_player, self.square_player):
+            self.circle_player.solve_world_collide()
+            self.square_player.solve_world_collide()
 
         if self.check_player_sides_collision(self.circle_player) or self.check_player_obstacle_collision(self.circle_player):
             self.circle_player.solve_world_collide()
 
         if self.check_player_sides_collision(self.square_player) or self.check_player_obstacle_collision(self.square_player):
             self.square_player.solve_world_collide()
+
+        for projectile in self.map.projectiles:
+            if projectile.collides(self.circle_player):
+                self.circle_player.go_vulnerable()
+                self.map.projectiles.remove(projectile)
+                continue
+            
+            if projectile.collides(self.square_player):
+                self.square_player.go_vulnerable()
+                self.map.projectiles.remove(projectile)
+                continue
 
         
     def render(self, surface: pygame.Surface) -> None:
@@ -61,10 +74,8 @@ class PlayState(BaseState):
 
 
     def check_players_collision(self, circle_player, square_player):
-        if circle_player.collides(square_player) or square_player.collides(circle_player):
-            circle_player.vx = square_player.vx = 0
-            circle_player.vy = square_player.vy = 0
-
+        return circle_player.collides(square_player) or square_player.collides(circle_player)
+            
 
     def check_player_sides_collision(self, player):
         for tile in self.map.collidable_tiles:
