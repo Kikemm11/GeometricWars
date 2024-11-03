@@ -48,3 +48,19 @@ class CirclePlayer(Player):
     
     def circle_throw(self, map):
         ProjectileFactory.throw_projectile
+
+
+
+class CirclePortal():
+    def __init__(self, x, y):
+        self.size = settings.TILE_SIZE
+        self.x = x 
+        self.y = y
+        self.texture = settings.TEXTURES["portal"]
+        self.frame = settings.FRAMES["portal"][0]
+        
+    def render(self, surface):
+        surface.blit(self.texture, (self.x, self.y), self.frame)
+
+    def get_collision_rect(self) -> pygame.Rect:
+        return pygame.Rect(self.x, self.y, self.size, self.size)

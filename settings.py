@@ -85,6 +85,7 @@ TEXTURES = {
     "projectile": pygame.image.load(BASE_DIR / "assets" / "textures" / "projectile.png"),
     "circle_item": pygame.image.load(BASE_DIR / "assets" / "textures" / "circle_item.png"),
     "square_item": pygame.image.load(BASE_DIR / "assets" / "textures" / "square_item.png"),
+    "portal": pygame.image.load(BASE_DIR / "assets" / "textures" / "portal.png"),
 }
 
 FRAMES = {
@@ -95,6 +96,7 @@ FRAMES = {
     "projectile": frames.generate_frames(TEXTURES["projectile"], PROJECTILE_SIZE, PROJECTILE_SIZE),
     "circle_item": frames.generate_frames(TEXTURES["circle_item"], CIRCLE_ITEM_SIZE, CIRCLE_ITEM_SIZE),
     "square_item": frames.generate_frames(TEXTURES["square_item"], SQUARE_ITEM_WIDTH, SQUARE_ITEM_HEIGHT),
+    "portal": frames.generate_frames(TEXTURES["portal"], TILE_SIZE, TILE_SIZE),
 }
 
 pygame.mixer.init()

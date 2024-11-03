@@ -49,3 +49,19 @@ class SquarePlayer(Player):
 
     def get_collision_rect(self) -> pygame.Rect:
         return pygame.Rect(self.x, self.y, self.width, self.height)
+    
+
+
+class SquarePortal():
+    def __init__(self, x, y):
+        self.size = settings.TILE_SIZE
+        self.x = x 
+        self.y = y
+        self.texture = settings.TEXTURES["portal"]
+        self.frame = settings.FRAMES["portal"][1]
+        
+    def render(self, surface):
+        surface.blit(self.texture, (self.x, self.y), self.frame)
+
+    def get_collision_rect(self) -> pygame.Rect:
+        return pygame.Rect(self.x, self.y, self.size, self.size)

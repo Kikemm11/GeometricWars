@@ -4,6 +4,8 @@ import random
 from src.Tile import Tile
 from src.Obstacle import Obstacle
 from src.Item import Item
+from src.CirclePlayer import CirclePortal
+from src.SquarePlayer import SquarePortal
 
 
 class Map():
@@ -15,6 +17,8 @@ class Map():
         self.items = []
         self.circle_tile = None
         self.square_tile = None
+        self.circle_portal = None
+        self.square_portal = None
         self._build_map()
         self._generate_obstacles()
         self._generate_circle_items()
@@ -50,9 +54,11 @@ class Map():
 
                 if x == 1 and y == 5:
                     self.circle_tile = tile
+                    self.circle_portal = CirclePortal(tile.x, tile.y)
                 
                 if x == settings.MAP_WIDTH - 2 and y == 5:
                     self.square_tile = tile
+                    self.square_portal = SquarePortal(tile.x, tile.y)
 
                 if collidable:
                     self.collidable_tiles.add(tile)
@@ -113,3 +119,7 @@ class Map():
 
         for item in self.items:
             item.render(surface)
+
+        self.circle_portal.render(surface)
+        self.square_portal.render(surface)
+                                
