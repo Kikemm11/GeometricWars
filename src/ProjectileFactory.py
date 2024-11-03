@@ -26,7 +26,7 @@ class ProjectileFactory():
             state = "throw-down"
         elif player.vy < 0:
             x = player.x + (player.width // 2) - (settings.PROJECTILE_SIZE // 2)
-            y = player.y + (player.height // 2)
+            y = player.y - 15
             state = "throw-up"
         else:
             x = player.x + (player.width // 2) - (settings.PROJECTILE_SIZE // 2)
