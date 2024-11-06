@@ -4,8 +4,10 @@ import random
 from src.Tile import Tile
 from src.Obstacle import Obstacle
 from src.Item import Item
-from src.CirclePlayer import CirclePortal
-from src.SquarePlayer import SquarePortal
+from src.CirclePlayer import CirclePortal, CirclePlayer
+from src.SquarePlayer import SquarePortal, SquarePlayer
+
+from gale.timer import Timer
 
 
 class Map():
@@ -84,7 +86,7 @@ class Map():
         for _ in range(settings.ITEMS):
             tile = random.choice(available_tiles)
             tile.occupied = True
-            item = Item(tile.x, tile.y, settings.CIRCLE_ITEM_SIZE, settings.CIRCLE_ITEM_SIZE, "circle_item", "circle_item")
+            item = Item(tile.x, tile.y, settings.CIRCLE_ITEM_SIZE, settings.CIRCLE_ITEM_SIZE, "circle_item", "circle_item", CirclePlayer)
 
             self.items.append(item)
 
@@ -96,15 +98,17 @@ class Map():
         for _ in range(settings.ITEMS):
             tile = random.choice(available_tiles)
             tile.occupied = True
-            item = Item(tile.x, tile.y, settings.SQUARE_ITEM_WIDTH, settings.SQUARE_ITEM_HEIGHT, "square_item", "square_item")
+            item = Item(tile.x, tile.y, settings.SQUARE_ITEM_WIDTH, settings.SQUARE_ITEM_HEIGHT, "square_item", "square_item", SquarePlayer)
 
             self.items.append(item)
 
 
-    def update(self, dt):
-        for projectile in self.projectiles:
-            collidable_objects = self.obstacles + list(self.collidable_tiles)
-            projectile.update(dt, collidable_objects, self)
+    def update(self, circle_player, square_player, dt):
+        self.update_projectiles(dt)
+        self.update_taken_items(circle_player, square_player)
+        self.release_item(circle_player, square_player)
+
+        
 
 
     def render(self, surface):
@@ -114,12 +118,69 @@ class Map():
         for obstacle in self.obstacles:
             obstacle.render(surface)
 
+        self.circle_portal.render(surface)
+        self.square_portal.render(surface)
+
         for projectile in self.projectiles:
             projectile.render(surface)
 
         for item in self.items:
             item.render(surface)
 
-        self.circle_portal.render(surface)
-        self.square_portal.render(surface)
-                                
+        
+
+    
+    def update_projectiles(self, dt):
+        for projectile in self.projectiles:
+            collidable_objects = self.obstacles + list(self.collidable_tiles)
+            projectile.update(dt, collidable_objects, self)
+
+
+    def update_taken_items(self, circle_player, square_player):
+        for item in self.items:
+            if not item.taken and circle_player.collides(item) and not circle_player.item and isinstance(circle_player, item.belongs):
+                item.taken = True
+                item.belongs = circle_player
+                circle_player.item = item
+            elif not item.taken and square_player.collides(item) and not square_player.item and isinstance(square_player, item.belongs):
+                item.taken = True
+                item.belongs = square_player
+                square_player.item = item
+
+            if item.taken and not item.released:
+                item.update()
+
+
+    def release_item(self, circle_player, square_player):
+
+        def release(item, player):
+            player.item = None
+            player.shape_counter += 1
+
+        if circle_player.item and circle_player.collides(self.circle_portal):
+            item = circle_player.item
+            portal = self.circle_portal
+            item.released = True
+
+            Timer.tween(
+                2,
+                [
+                    (item, {"x": portal.x + (portal.size // 2) - (item.width // 2),
+                            "y": portal.y + (portal.size // 2) - (item.height // 2)}),
+                ],
+                on_finish=release(item, circle_player),
+            )
+
+        elif square_player.item and square_player.collides(self.square_portal):
+            item = square_player.item
+            portal = self.square_portal
+            item.released = True
+    
+            Timer.tween(
+                2,
+                [
+                    (item, {"x": portal.x + (portal.size // 2) - (item.width // 2),
+                            "y": portal.y + (portal.size // 2) - (item.height // 2)}),
+                ],
+                on_finish=release(item, square_player),
+            )

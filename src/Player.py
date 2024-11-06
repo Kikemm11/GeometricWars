@@ -32,6 +32,8 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
         self.vulnerable = False
         self.vulnerable_timer = 0
         self.flash_timer = 0
+        self.item = None
+        self.shape_counter = 0
 
     def change_state(
         self, state_id: str, *args: Tuple[Any], **kwargs: Dict[str, Any]

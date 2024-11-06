@@ -35,7 +35,7 @@ class PlayState(BaseState):
     def update(self, dt: float) -> None:
         self.circle_player.update(dt)
         self.square_player.update(dt)
-        self.map.update(dt)
+        self.map.update(self.circle_player, self.square_player, dt)
 
         if self.check_players_collision(self.circle_player, self.square_player):
             self.circle_player.solve_world_collide()
