@@ -163,7 +163,7 @@ class Map():
             item.released = True
 
             Timer.tween(
-                2,
+                1,
                 [
                     (item, {"x": portal.x + (portal.size // 2) - (item.width // 2),
                             "y": portal.y + (portal.size // 2) - (item.height // 2)}),
@@ -177,7 +177,7 @@ class Map():
             item.released = True
     
             Timer.tween(
-                2,
+                1,
                 [
                     (item, {"x": portal.x + (portal.size // 2) - (item.width // 2),
                             "y": portal.y + (portal.size // 2) - (item.height // 2)}),

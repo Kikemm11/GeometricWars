@@ -64,6 +64,26 @@ class PlayState(BaseState):
         self.circle_player.render(surface)
         self.square_player.render(surface)
 
+        render_text(
+            surface,
+            f"Circle shapes: " + str(self.circle_player.shape_counter),
+            settings.FONTS["medium"],
+            settings.TILE_SIZE + 10,
+            settings.TILE_SIZE // 4,
+            (255, 255, 255),
+            center=False,
+        )
+
+        render_text(
+            surface,
+            f"Square shapes: " + str(self.square_player.shape_counter),
+            settings.FONTS["medium"],
+            settings.VIRTUAL_WIDTH - settings.TILE_SIZE * 8,
+            settings.TILE_SIZE // 4,
+            (255, 255, 255),
+            center=False,
+        )
+
 
     def on_input(self, input_id: str, input_data: InputData) -> None:
         self.circle_player.on_input(input_id, input_data)
