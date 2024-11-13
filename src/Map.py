@@ -61,10 +61,12 @@ class Map:
                 if x == 1 and y == 5:
                     self.circle_tile = tile
                     self.circle_portal = CirclePortal(tile.x, tile.y)
+                    tile.occupied = True
 
                 if x == settings.MAP_WIDTH - 2 and y == 5:
                     self.square_tile = tile
                     self.square_portal = SquarePortal(tile.x, tile.y)
+                    tile.occupied = True
 
                 if collidable:
                     self.collidable_tiles.add(tile)
@@ -85,7 +87,7 @@ class Map:
     def _generate_circle_items(self):
         floor_tiles = list(self.tiles - self.collidable_tiles)
         available_tiles = [tile for tile in floor_tiles if not tile.occupied]
-        # MENINO MODIFICA ACA EL RANGO DE TILES PA QUE NO TOME EN CUENTA LOS BORDES
+        
         for _ in range(settings.ITEMS):
             tile = random.choice(available_tiles)
             tile.occupied = True
@@ -104,7 +106,6 @@ class Map:
     def _generate_square_items(self):
         floor_tiles = list(self.tiles - self.collidable_tiles)
         available_tiles = [tile for tile in floor_tiles if not tile.occupied]
-        # MENINO MODIFICA ACA EL RANGO DE TILES PA QUE NO TOME EN CUENTA LOS BORDES
 
         for _ in range(settings.ITEMS):
             tile = random.choice(available_tiles)
