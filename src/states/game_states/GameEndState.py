@@ -17,7 +17,7 @@ class GameEndState(BaseState):
         if self.player:
             self.player.x = (settings.VIRTUAL_WIDTH // 2) - (self.player.width // 2)
             self.player.y = settings.VIRTUAL_HEIGHT // 2
-            self.player.change_state("idle")
+            self.player.change_state("idle-down")
         
         self.selected = 1
 

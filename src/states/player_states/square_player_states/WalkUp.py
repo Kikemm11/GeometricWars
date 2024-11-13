@@ -16,6 +16,6 @@ class WalkUp(BaseEntityState):
         elif input_id == "move_right" and input_data.pressed:
             self.entity.change_state("walk-right")
         elif input_id == "move_up" and input_data.released:
-            self.entity.change_state("idle")
+            self.entity.change_state("idle-up")
         elif input_id == "move_down" and input_data.pressed:
             self.entity.change_state("walk-down")  

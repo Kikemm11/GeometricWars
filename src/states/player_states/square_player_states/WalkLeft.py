@@ -12,7 +12,7 @@ class WalkLeft(BaseEntityState):
 
     def on_input(self, input_id: str, input_data: InputData) -> None:
         if input_id == "move_left" and input_data.released:
-            self.entity.change_state("idle")
+            self.entity.change_state("idle-left")
         elif input_id == "move_right" and input_data.pressed:
             self.entity.change_state("walk-right")
         elif input_id == "move_up" and input_data.pressed:

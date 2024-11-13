@@ -29,13 +29,13 @@ class PlayState(BaseState):
             settings.TILE_SIZE + 0.7,
             settings.VIRTUAL_HEIGHT // 2 - settings.PLAYER_HEIGHT // 8,
         )
-        self.circle_player.change_state("idle")
+        self.circle_player.change_state("idle-down")
 
         self.square_player = SquarePlayer(
             settings.VIRTUAL_WIDTH - settings.PLAYER_WIDTH - settings.TILE_SIZE - 0.5,
             settings.VIRTUAL_HEIGHT // 2 - settings.PLAYER_HEIGHT // 8,
         )
-        self.square_player.change_state("idle")
+        self.square_player.change_state("idle-down")
 
         # Set the timer duration (in seconds)
         self.timer_duration = settings.GAME_TIMER_DURATION_SECONDS  # 1 minute

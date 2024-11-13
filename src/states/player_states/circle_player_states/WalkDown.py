@@ -18,4 +18,4 @@ class WalkDown(BaseEntityState):
         elif input_id == "move_up_2" and input_data.pressed:
             self.entity.change_state("walk-up")
         elif input_id == "move_down_2" and input_data.released:
-            self.entity.change_state("idle") 
+            self.entity.change_state("idle-down") 

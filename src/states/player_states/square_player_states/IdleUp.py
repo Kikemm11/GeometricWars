@@ -1,14 +1,12 @@
 from gale.input_handler import InputData
 from src.states.player_states.BaseEntityState import BaseEntityState
 
-import settings
 
-
-class WalkDown(BaseEntityState):
+class IdleUp(BaseEntityState):
     def enter(self) -> None:
         self.entity.vx = 0
-        self.entity.vy = settings.PLAYER_VY 
-        self.entity.change_animation("walk-down")
+        self.entity.vy = 0
+        self.entity.change_animation("idle-up")
 
     def on_input(self, input_id: str, input_data: InputData) -> None:
         if input_id == "move_left" and input_data.pressed:
@@ -17,5 +15,5 @@ class WalkDown(BaseEntityState):
             self.entity.change_state("walk-right")
         elif input_id == "move_up" and input_data.pressed:
             self.entity.change_state("walk-up")
-        elif input_id == "move_down" and input_data.released:
-            self.entity.change_state("idle-down")
+        elif input_id == "move_down" and input_data.pressed:
+            self.entity.change_state("walk-down")
