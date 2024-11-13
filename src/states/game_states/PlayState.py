@@ -45,26 +45,8 @@ class PlayState(BaseState):
         self.time_left = self.timer_duration
 
     def update(self, dt: float) -> None:
-        # region clock
-        seconds = (
-            pygame.time.get_ticks() - self.start_ticks
-        ) / 1000  # Convert milliseconds to seconds
-        self.time_left = int(max(0, self.timer_duration - seconds))
-        if self.time_left <= 0:
-            if self.square_player.shape_counter == self.circle_player.shape_counter:
-                self.state_machine.change(
-                    "game-over", "NO CONTEST!", pygame.Color(0, 255, 0)
-                )
-            elif self.square_player.shape_counter > self.circle_player.shape_counter:
-                self.state_machine.change(
-                    "game-over", "Square Wins!", pygame.Color(255, 0, 0)
-                )
-
-            else:
-                self.state_machine.change(
-                    "game-over", "Circle Wins!", pygame.Color(0, 50, 255)
-                )
-        # endregion
+        self.update_time_left()
+        self.check_winner()
         self.circle_player.update(dt)
         self.square_player.update(dt)
         self.map.update(self.circle_player, self.square_player, dt)
@@ -94,14 +76,6 @@ class PlayState(BaseState):
                 self.map.projectiles.remove(projectile)
                 continue
 
-        if self.square_player.shape_counter >= settings.SCORE_TO_WIN:
-            self.state_machine.change(
-                "game-over", "Square Wins!", pygame.Color(255, 0, 0)
-            )
-        elif self.circle_player.shape_counter >= settings.SCORE_TO_WIN:
-            self.state_machine.change(
-                "game-over", "Circle Wins!", pygame.Color(0, 50, 255)
-            )
 
     def render(self, surface: pygame.Surface) -> None:
         self.map.render(surface)
@@ -161,3 +135,27 @@ class PlayState(BaseState):
             if player.collides(obstacle):
                 return True
         return False
+    
+    def update_time_left(self):
+        # Region clock
+        seconds = (
+            pygame.time.get_ticks() - self.start_ticks
+        ) / 1000  # Convert milliseconds to seconds
+        self.time_left = int(max(0, self.timer_duration - seconds))
+
+        # Check if winner
+
+        if self.time_left <= 0:
+            if self.square_player.shape_counter == self.circle_player.shape_counter:
+                self.state_machine.change("game-over")
+            elif self.square_player.shape_counter > self.circle_player.shape_counter:
+                self.state_machine.change("game-over", player=self.square_player)
+            else:
+                self.state_machine.change("game-over", player=self.circle_player)
+        # End region
+                
+    def check_winner(self):
+        if self.square_player.shape_counter >= settings.SCORE_TO_WIN:
+            self.state_machine.change("game-over", player=self.square_player)
+        elif self.circle_player.shape_counter >= settings.SCORE_TO_WIN:
+            self.state_machine.change("game-over", player=self.circle_player)

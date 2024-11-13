@@ -95,7 +95,6 @@ class StartState(BaseState):
             if self.selected == 1:
                 self.state_machine.change("playstate")
             else:
-                print("Instructions")
                 self.state_machine.change("instructions")
 
     def erratic_players(self, circle_player: Player, square_player: Player):
