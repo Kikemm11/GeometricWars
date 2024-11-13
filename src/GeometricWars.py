@@ -13,6 +13,8 @@ class GeometricWars(Game):
             {
                 "start": game_states.StartState,
                 "playstate": game_states.PlayState,
+                "game-over": game_states.GameEndState,
+                "instructions": game_states.InstructionsState,
             }
         )
         self.state_machine.change("start")

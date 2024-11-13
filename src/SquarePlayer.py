@@ -3,7 +3,13 @@ from typing import TypeVar
 from gale.input_handler import InputData
 
 from src.Player import Player
-from src.states.player_states.square_player_states import IdleState , WalkRight, WalkLeft, WalkUp, WalkDown
+from src.states.player_states.square_player_states import (
+    IdleState,
+    WalkRight,
+    WalkLeft,
+    WalkUp,
+    WalkDown,
+)
 
 import pygame
 import settings
@@ -12,7 +18,8 @@ from src.ProjectileFactory import ProjectileFactory
 
 
 class SquarePlayer(Player):
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, x: int, y: int, collision_px_reduction=0) -> None:
+        self.collision_px_reduction = collision_px_reduction
         super().__init__(
             x,
             y,
@@ -35,31 +42,32 @@ class SquarePlayer(Player):
             },
         )
 
-
     def on_input(self, input_id: str, input_data: InputData) -> None:
         if not self.vulnerable:
             self.state_machine.on_input(input_id, input_data)
-
 
     def on_input_throw(self, input_id, input_data, map) -> None:
         if not self.vulnerable:
             if input_id == "square_throw" and input_data.pressed:
                 ProjectileFactory.throw_projectile(map, self)
 
-
     def get_collision_rect(self) -> pygame.Rect:
-        return pygame.Rect(self.x, self.y, self.width, self.height)
-    
+        return pygame.Rect(
+            self.x + self.collision_px_reduction,
+            self.y + self.collision_px_reduction,
+            self.width - self.collision_px_reduction,
+            self.height - self.collision_px_reduction,
+        )
 
 
-class SquarePortal():
+class SquarePortal:
     def __init__(self, x, y):
         self.size = settings.TILE_SIZE
-        self.x = x 
+        self.x = x
         self.y = y
         self.texture = settings.TEXTURES["portal"]
         self.frame = settings.FRAMES["portal"][1]
-        
+
     def render(self, surface):
         surface.blit(self.texture, (self.x, self.y), self.frame)
 

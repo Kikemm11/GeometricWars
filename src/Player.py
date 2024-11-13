@@ -16,11 +16,12 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
         texture_id: str,
         states: Dict[str, BaseState],
         animation_defs: Dict[str, Dict[str, Any]],
+        zoom_scale: float = 0.8,
     ) -> None:
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
+        self.width = width * zoom_scale
+        self.height = height * zoom_scale
         self.vx: float = 0
         self.vy: float = 0
         self.texture_id = texture_id
@@ -34,6 +35,7 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
         self.flash_timer = 0
         self.item = None
         self.shape_counter = 0
+        self.zoom_scale: float = zoom_scale
 
     def change_state(
         self, state_id: str, *args: Tuple[Any], **kwargs: Dict[str, Any]
@@ -62,23 +64,21 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
         else:
             self.x = min(settings.VIRTUAL_WIDTH - self.width, next_x)
 
-        if self.vy < 0: 
+        if self.vy < 0:
             self.y = max(0, next_y)
         else:
             self.y = min(settings.VIRTUAL_HEIGHT - self.height, next_y)
 
-
     def render(self, surface):
         if not self.vulnerable:
-            super().render(surface)
+            super().render(surface, zoom_scale=self.zoom_scale)
 
         if self.vulnerable and self.flash_timer > 0.06:
-            super().render(surface)
+            super().render(surface, zoom_scale=self.zoom_scale)
             self.flash_timer = 0
 
-
     def solve_world_collide(self):
-        
+
         if self.vx > 0:
             self.x -= 0.5
             self.vx = 0
@@ -92,8 +92,7 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
             self.y += 0.5
             self.vy = 0
 
-    
     def go_vulnerable(self):
         self.vulnerable = True
         self.vx = 0
-        self.vy = 0     
+        self.vy = 0

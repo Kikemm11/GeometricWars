@@ -19,6 +19,10 @@ input_handler.InputHandler.set_keyboard_action(input_handler.KEY_d, "move_right_
 input_handler.InputHandler.set_keyboard_action(input_handler.KEY_f, "circle_throw")
 input_handler.InputHandler.set_keyboard_action(input_handler.KEY_RCTRL, "square_throw")
 
+# SCORE TO WIN
+SCORE_TO_WIN = 3
+GAME_TIMER_DURATION_SECONDS = 20
+
 
 # Size we want to emulate
 VIRTUAL_WIDTH = 400
@@ -35,8 +39,8 @@ BASE_DIR = pathlib.Path(__file__).parent
 TILE_SIZE = 20
 
 TILE_CORNER = 0
-TILE_SIDE =  1
-TILE_FLOOR = [3,4,5,6,7,8,9]
+TILE_SIDE = 1
+TILE_FLOOR = [3, 4, 5, 6, 7, 8, 9]
 
 
 # Obstacle size
@@ -77,32 +81,55 @@ PLAYER_VULNERABLE_TIME = 3
 
 
 TEXTURES = {
-    "background": pygame.image.load(BASE_DIR / "assets" / "textures" / "background.png"),
-    "circle_player": pygame.image.load(BASE_DIR / "assets" / "textures" / "circle_player.png"),
-    "square_player": pygame.image.load(BASE_DIR / "assets" / "textures" / "square_player.png"),
+    "background": pygame.image.load(
+        BASE_DIR / "assets" / "textures" / "background.png"
+    ),
+    "circle_player": pygame.image.load(
+        BASE_DIR / "assets" / "textures" / "circle_player.png"
+    ),
+    "square_player": pygame.image.load(
+        BASE_DIR / "assets" / "textures" / "square_player.png"
+    ),
     "tilesheet": pygame.image.load(BASE_DIR / "assets" / "textures" / "tilesheet.png"),
     "obstacle": pygame.image.load(BASE_DIR / "assets" / "textures" / "obstacle.png"),
-    "projectile": pygame.image.load(BASE_DIR / "assets" / "textures" / "projectile.png"),
-    "circle_item": pygame.image.load(BASE_DIR / "assets" / "textures" / "circle_item.png"),
-    "square_item": pygame.image.load(BASE_DIR / "assets" / "textures" / "square_item.png"),
+    "projectile": pygame.image.load(
+        BASE_DIR / "assets" / "textures" / "projectile.png"
+    ),
+    "circle_item": pygame.image.load(
+        BASE_DIR / "assets" / "textures" / "circle_item.png"
+    ),
+    "square_item": pygame.image.load(
+        BASE_DIR / "assets" / "textures" / "square_item.png"
+    ),
     "portal": pygame.image.load(BASE_DIR / "assets" / "textures" / "portal.png"),
 }
 
 FRAMES = {
-    "circle_player": frames.generate_frames(TEXTURES["circle_player"], PLAYER_WIDTH, PLAYER_HEIGHT),
-    "square_player": frames.generate_frames(TEXTURES["square_player"], PLAYER_WIDTH, PLAYER_HEIGHT),
+    "circle_player": frames.generate_frames(
+        TEXTURES["circle_player"], PLAYER_WIDTH, PLAYER_HEIGHT
+    ),
+    "square_player": frames.generate_frames(
+        TEXTURES["square_player"], PLAYER_WIDTH, PLAYER_HEIGHT
+    ),
     "tilesheet": frames.generate_frames(TEXTURES["tilesheet"], TILE_SIZE, TILE_SIZE),
-    "obstacle": frames.generate_frames(TEXTURES["obstacle"], OBSTACLE_WIDTH, OBSTACLE_HEIGHT),
-    "projectile": frames.generate_frames(TEXTURES["projectile"], PROJECTILE_SIZE, PROJECTILE_SIZE),
-    "circle_item": frames.generate_frames(TEXTURES["circle_item"], CIRCLE_ITEM_SIZE, CIRCLE_ITEM_SIZE),
-    "square_item": frames.generate_frames(TEXTURES["square_item"], SQUARE_ITEM_WIDTH, SQUARE_ITEM_HEIGHT),
+    "obstacle": frames.generate_frames(
+        TEXTURES["obstacle"], OBSTACLE_WIDTH, OBSTACLE_HEIGHT
+    ),
+    "projectile": frames.generate_frames(
+        TEXTURES["projectile"], PROJECTILE_SIZE, PROJECTILE_SIZE
+    ),
+    "circle_item": frames.generate_frames(
+        TEXTURES["circle_item"], CIRCLE_ITEM_SIZE, CIRCLE_ITEM_SIZE
+    ),
+    "square_item": frames.generate_frames(
+        TEXTURES["square_item"], SQUARE_ITEM_WIDTH, SQUARE_ITEM_HEIGHT
+    ),
     "portal": frames.generate_frames(TEXTURES["portal"], TILE_SIZE, TILE_SIZE),
 }
 
 pygame.mixer.init()
 
-SOUNDS = {
-}
+SOUNDS = {}
 
 pygame.font.init()
 

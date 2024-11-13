@@ -1,5 +1,11 @@
 from src.Player import Player
-from src.states.player_states.circle_player_states import IdleState , WalkRight, WalkLeft, WalkUp, WalkDown
+from src.states.player_states.circle_player_states import (
+    IdleState,
+    WalkRight,
+    WalkLeft,
+    WalkUp,
+    WalkDown,
+)
 
 import pygame
 import settings
@@ -8,7 +14,8 @@ from src.ProjectileFactory import ProjectileFactory
 
 
 class CirclePlayer(Player):
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, x: int, y: int, collision_px_reduction=0) -> None:
+        self.collision_px_reduction = collision_px_reduction
         super().__init__(
             x,
             y,
@@ -23,7 +30,7 @@ class CirclePlayer(Player):
                 "walk-down": lambda sm: WalkDown.WalkDown(self, sm),
             },
             animation_defs={
-                "idle": {"frames": [0,2], "interval": 0.2},
+                "idle": {"frames": [0, 2], "interval": 0.2},
                 "walk-right": {"frames": [8, 9, 10, 11], "interval": 0.2},
                 "walk-left": {"frames": [4, 5, 6, 7], "interval": 0.2},
                 "walk-up": {"frames": [12, 13, 14, 15], "interval": 0.2},
@@ -31,34 +38,35 @@ class CirclePlayer(Player):
             },
         )
 
-
     def on_input(self, input_id, input_data) -> None:
         if not self.vulnerable:
             self.state_machine.on_input(input_id, input_data)
-
 
     def on_input_throw(self, input_id, input_data, map) -> None:
         if not self.vulnerable:
             if input_id == "circle_throw" and input_data.pressed:
                 ProjectileFactory.throw_projectile(map, self)
-            
 
     def get_collision_rect(self) -> pygame.Rect:
-        return pygame.Rect(self.x, self.y, self.width, self.height)
-    
+        return pygame.Rect(
+            self.x + self.collision_px_reduction,
+            self.y + self.collision_px_reduction,
+            self.width - self.collision_px_reduction,
+            self.height - self.collision_px_reduction,
+        )
+
     def circle_throw(self, map):
         ProjectileFactory.throw_projectile
 
 
-
-class CirclePortal():
+class CirclePortal:
     def __init__(self, x, y):
         self.size = settings.TILE_SIZE
-        self.x = x 
+        self.x = x
         self.y = y
         self.texture = settings.TEXTURES["portal"]
         self.frame = settings.FRAMES["portal"][0]
-        
+
     def render(self, surface):
         surface.blit(self.texture, (self.x, self.y), self.frame)
 
