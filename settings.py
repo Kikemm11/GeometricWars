@@ -20,8 +20,8 @@ input_handler.InputHandler.set_keyboard_action(input_handler.KEY_f, "circle_thro
 input_handler.InputHandler.set_keyboard_action(input_handler.KEY_RCTRL, "square_throw")
 
 # SCORE TO WIN
-SCORE_TO_WIN = 3
-GAME_TIMER_DURATION_SECONDS = 20
+SCORE_TO_WIN = 10
+GAME_TIMER_DURATION_SECONDS = 99
 
 
 # Size we want to emulate

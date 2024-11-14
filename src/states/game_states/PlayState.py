@@ -4,6 +4,8 @@ from gale.input_handler import InputData
 from gale.state import BaseState
 from gale.text import Text, render_text
 
+pygame.mixer.init()
+
 import settings
 from src.Player import Player
 from src.Map import Map
@@ -14,6 +16,8 @@ from src.SquarePlayer import SquarePlayer
 class PlayState(BaseState):
 
     def enter(self) -> None:
+        pygame.mixer.music.load(r"assets\music\game.mp3")
+        pygame.mixer.music.play(-1)  # Loop indefinitely
         self.title = Text(
             "Geometric Wars",
             settings.FONTS["medium"],
@@ -76,7 +80,6 @@ class PlayState(BaseState):
                 self.map.projectiles.remove(projectile)
                 continue
 
-
     def render(self, surface: pygame.Surface) -> None:
         self.map.render(surface)
         self.circle_player.render(surface)
@@ -135,7 +138,7 @@ class PlayState(BaseState):
             if player.collides(obstacle):
                 return True
         return False
-    
+
     def update_time_left(self):
         # Region clock
         seconds = (
@@ -153,9 +156,13 @@ class PlayState(BaseState):
             else:
                 self.state_machine.change("game-over", player=self.circle_player)
         # End region
-                
+
     def check_winner(self):
         if self.square_player.shape_counter >= settings.SCORE_TO_WIN:
             self.state_machine.change("game-over", player=self.square_player)
         elif self.circle_player.shape_counter >= settings.SCORE_TO_WIN:
             self.state_machine.change("game-over", player=self.circle_player)
+
+    def exit(self) -> None:
+        pygame.mixer.music.stop()
+        pass

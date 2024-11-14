@@ -4,6 +4,9 @@ from gale.input_handler import InputData
 from gale.state import BaseState
 from gale.text import Text, render_text
 
+
+pygame.mixer.init()
+
 import settings
 
 from src.CirclePlayer import CirclePlayer
@@ -12,13 +15,15 @@ from src.SquarePlayer import SquarePlayer
 
 class GameEndState(BaseState):
     def enter(self, **params) -> None:
-        self.player = params.get('player')
-        
+        pygame.mixer.music.load(r"assets\music\gameover.mp3")
+        pygame.mixer.music.play(-1)  # Loop indefinitely
+        self.player = params.get("player")
+
         if self.player:
             self.player.x = (settings.VIRTUAL_WIDTH // 2) - (self.player.width // 2)
             self.player.y = settings.VIRTUAL_HEIGHT // 2
             self.player.change_state("idle-down")
-        
+
         self.selected = 1
 
     def render(self, surface: pygame.Surface) -> None:
@@ -28,8 +33,16 @@ class GameEndState(BaseState):
         message = "You've win!" if self.player else "It's a tie!"
         color = (255, 255, 255)
 
-        color = (64, 209, 244) if self.player and isinstance(self.player, CirclePlayer) else color
-        color = (244, 64, 94) if self.player and isinstance(self.player, SquarePlayer) else color
+        color = (
+            (64, 209, 244)
+            if self.player and isinstance(self.player, CirclePlayer)
+            else color
+        )
+        color = (
+            (244, 64, 94)
+            if self.player and isinstance(self.player, SquarePlayer)
+            else color
+        )
 
         render_text(
             surface,
@@ -44,7 +57,6 @@ class GameEndState(BaseState):
 
         if self.player:
             self.player.render(surface)
-
 
         color = (81, 15, 160) if self.selected == 1 else (255, 255, 255)
 
@@ -70,7 +82,6 @@ class GameEndState(BaseState):
             center=True,
         )
 
-
     def on_input(self, input_id: str, input_data: InputData) -> None:
         if input_id == "move_down" and input_data.pressed:
             self.selected = 2 if self.selected == 1 else 1
@@ -84,3 +95,7 @@ class GameEndState(BaseState):
                 self.state_machine.change("playstate")
             else:
                 self.state_machine.change("start")
+
+    def exit(self) -> None:
+        pygame.mixer.music.stop()
+        pass
