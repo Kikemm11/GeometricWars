@@ -132,6 +132,7 @@ SOUNDS = {
     "hit": pygame.mixer.Sound(BASE_DIR / "assets" / "sounds" / "hit.wav"),
     "item": pygame.mixer.Sound(BASE_DIR / "assets" / "sounds" / "item.wav"),
     "hurt": pygame.mixer.Sound(BASE_DIR / "assets" / "sounds" / "hurt.wav"),
+    "select": pygame.mixer.Sound(BASE_DIR / "assets" / "sounds" / "select.wav"),
 }
 
 pygame.font.init()
