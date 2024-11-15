@@ -13,8 +13,12 @@ import settings
 class InstructionsState(BaseState):
     def enter(self, text_color=pygame.Color(255, 255, 255)) -> None:
         self.text_color = text_color
-        pygame.mixer.music.load(r"assets\music\menu.mp3")
-        pygame.mixer.music.play(-1)  # Loop indefinitely
+        
+        pygame.mixer.music.load(
+            settings.BASE_DIR / "assets" / "sounds" / "menu.mp3"
+        )
+        pygame.mixer.music.play(loops=-1)
+        
 
     def render(self, surface: pygame.Surface) -> None:
 
@@ -33,7 +37,7 @@ class InstructionsState(BaseState):
 
         render_text(
             surface,
-            f"Objective: Collect 10 materials of your color",
+            f"Objective: Collect 10 items of your color",
             color=pygame.Color(255, 255, 255),
             font=settings.FONTS["medium"],
             x=settings.VIRTUAL_WIDTH // 2,
@@ -44,18 +48,18 @@ class InstructionsState(BaseState):
 
         render_text(
             surface,
-            f"to win or have the most when time is up!",
+            f"to win or try to get the most when time is up!",
             color=pygame.Color(255, 255, 255),
             font=settings.FONTS["medium"],
             x=settings.VIRTUAL_WIDTH // 2,
-            y=(settings.VIRTUAL_HEIGHT // 2) - 25,
+            y=(settings.VIRTUAL_HEIGHT // 2) - 15,
             center=True,
             shadowed=True,
         )
 
         render_text(
             surface,
-            f"MOVE WASD",
+            "MOVE: Arrows",
             color=pygame.Color(244, 64, 94),
             font=settings.FONTS["medium"],
             x=(settings.VIRTUAL_WIDTH // 2) + 80,
@@ -66,7 +70,7 @@ class InstructionsState(BaseState):
 
         render_text(
             surface,
-            f"MOVE Arrows",
+            "MOVE: W A S D",
             color=pygame.Color(64, 209, 244),
             font=settings.FONTS["medium"],
             x=(settings.VIRTUAL_WIDTH // 2) - 80,
@@ -77,7 +81,7 @@ class InstructionsState(BaseState):
 
         render_text(
             surface,
-            f"SHOOT F",
+            "SHOOT: RCTRL",
             color=pygame.Color(244, 64, 94),
             font=settings.FONTS["medium"],
             x=(settings.VIRTUAL_WIDTH // 2) + 80,
@@ -88,7 +92,7 @@ class InstructionsState(BaseState):
 
         render_text(
             surface,
-            f"SHOOT RCTRL",
+            "SHOOT: F",
             color=pygame.Color(64, 209, 244),
             font=settings.FONTS["medium"],
             x=(settings.VIRTUAL_WIDTH // 2) - 80,
@@ -99,8 +103,8 @@ class InstructionsState(BaseState):
 
         render_text(
             surface,
-            f"(Any key to go to Menu)",
-            color=pygame.Color(255, 255, 255),
+            "Menu",
+            color=pygame.Color(81, 15, 160),
             font=settings.FONTS["medium"],
             x=settings.VIRTUAL_WIDTH // 2,
             y=settings.VIRTUAL_HEIGHT - 20,
@@ -109,9 +113,9 @@ class InstructionsState(BaseState):
         )
 
     def on_input(self, input_id: str, input_data: InputData) -> None:
-        if input_data.pressed:
+        if input_id == "enter" and input_data.pressed:
             self.state_machine.change("start")
 
     def exit(self) -> None:
         pygame.mixer.music.stop()
-        pass
+        pygame.mixer.music.unload()

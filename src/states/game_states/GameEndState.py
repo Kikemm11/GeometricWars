@@ -4,9 +4,6 @@ from gale.input_handler import InputData
 from gale.state import BaseState
 from gale.text import Text, render_text
 
-
-pygame.mixer.init()
-
 import settings
 
 from src.CirclePlayer import CirclePlayer
@@ -15,8 +12,12 @@ from src.SquarePlayer import SquarePlayer
 
 class GameEndState(BaseState):
     def enter(self, **params) -> None:
-        pygame.mixer.music.load(r"assets\music\gameover.mp3")
-        pygame.mixer.music.play(-1)  # Loop indefinitely
+        
+        pygame.mixer.music.load(
+            settings.BASE_DIR / "assets" / "sounds" / "game-over.mp3"
+        )
+        pygame.mixer.music.play(loops=-1)
+        
         self.player = params.get("player")
 
         if self.player:
@@ -98,4 +99,4 @@ class GameEndState(BaseState):
 
     def exit(self) -> None:
         pygame.mixer.music.stop()
-        pass
+        pygame.mixer.music.unload()

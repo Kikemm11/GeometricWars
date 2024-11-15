@@ -19,8 +19,7 @@ input_handler.InputHandler.set_keyboard_action(input_handler.KEY_d, "move_right_
 input_handler.InputHandler.set_keyboard_action(input_handler.KEY_f, "circle_throw")
 input_handler.InputHandler.set_keyboard_action(input_handler.KEY_RCTRL, "square_throw")
 
-# SCORE TO WIN
-SCORE_TO_WIN = 10
+# War time
 GAME_TIMER_DURATION_SECONDS = 99
 
 
@@ -129,7 +128,11 @@ FRAMES = {
 
 pygame.mixer.init()
 
-SOUNDS = {}
+SOUNDS = {
+    "hit": pygame.mixer.Sound(BASE_DIR / "assets" / "sounds" / "hit.wav"),
+    "item": pygame.mixer.Sound(BASE_DIR / "assets" / "sounds" / "item.wav"),
+    "hurt": pygame.mixer.Sound(BASE_DIR / "assets" / "sounds" / "hurt.wav"),
+}
 
 pygame.font.init()
 

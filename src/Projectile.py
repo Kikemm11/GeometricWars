@@ -65,3 +65,6 @@ class Projectile(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMi
 
         if self in map.projectiles:
             map.projectiles.remove(self)
+            
+        settings.SOUNDS["hit"].stop()
+        settings.SOUNDS["hit"].play()

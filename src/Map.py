@@ -177,6 +177,9 @@ class Map:
         def release(item, player):
             player.item = None
             player.shape_counter += 1
+            
+            settings.SOUNDS["item"].stop()
+            settings.SOUNDS["item"].play()
 
         if circle_player.item and circle_player.collides(self.circle_portal):
             item = circle_player.item

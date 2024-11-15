@@ -16,8 +16,11 @@ from src.SquarePlayer import SquarePlayer
 class PlayState(BaseState):
 
     def enter(self) -> None:
-        pygame.mixer.music.load(r"assets\music\game.mp3")
-        pygame.mixer.music.play(-1)  # Loop indefinitely
+        pygame.mixer.music.load(
+            settings.BASE_DIR / "assets" / "sounds" / "game.mp3"
+        )
+        pygame.mixer.music.play(loops=-1)
+        
         self.title = Text(
             "Geometric Wars",
             settings.FONTS["medium"],
@@ -73,11 +76,15 @@ class PlayState(BaseState):
             if projectile.collides(self.circle_player):
                 self.circle_player.go_vulnerable()
                 self.map.projectiles.remove(projectile)
+                settings.SOUNDS["hurt"].stop()
+                settings.SOUNDS["hurt"].play()
                 continue
 
             if projectile.collides(self.square_player):
                 self.square_player.go_vulnerable()
                 self.map.projectiles.remove(projectile)
+                settings.SOUNDS["hurt"].stop()
+                settings.SOUNDS["hurt"].play()
                 continue
 
     def render(self, surface: pygame.Surface) -> None:
@@ -158,11 +165,11 @@ class PlayState(BaseState):
         # End region
 
     def check_winner(self):
-        if self.square_player.shape_counter >= settings.SCORE_TO_WIN:
+        if self.square_player.shape_counter >= settings.ITEMS:
             self.state_machine.change("game-over", player=self.square_player)
-        elif self.circle_player.shape_counter >= settings.SCORE_TO_WIN:
+        elif self.circle_player.shape_counter >= settings.ITEMS:
             self.state_machine.change("game-over", player=self.circle_player)
 
     def exit(self) -> None:
         pygame.mixer.music.stop()
-        pass
+        pygame.mixer.music.unload()

@@ -4,8 +4,6 @@ from gale.input_handler import InputData
 from gale.state import BaseState
 from gale.text import Text, render_text
 
-pygame.mixer.init()
-
 import settings
 from src.Player import Player
 from src.CirclePlayer import CirclePlayer
@@ -15,8 +13,11 @@ from src.SquarePlayer import SquarePlayer
 class StartState(BaseState):
 
     def enter(self) -> None:
-        pygame.mixer.music.load(r"assets\music\menu.mp3")
-        pygame.mixer.music.play(-1)  # Loop indefinitely
+        
+        pygame.mixer.music.load(
+            settings.BASE_DIR / "assets" / "sounds" / "menu.mp3"
+        )
+        pygame.mixer.music.play(loops=-1)
 
         self.title = Text(
             "Geometric Wars",
@@ -38,9 +39,7 @@ class StartState(BaseState):
         )
         self.square_player.change_state("walk-left")
 
-    def exit(self) -> None:
-        pygame.mixer.music.stop()
-        pass
+    
 
     def update(self, dt: float) -> None:
         self.circle_player.update(dt)
@@ -102,6 +101,12 @@ class StartState(BaseState):
                 self.state_machine.change("playstate")
             else:
                 self.state_machine.change("instructions")
+                
+                
+    def exit(self) -> None:
+        pygame.mixer.music.stop()
+        pygame.mixer.music.unload()
+        
 
     def erratic_players(self, circle_player: Player, square_player: Player):
 
