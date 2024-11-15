@@ -14,7 +14,7 @@ class GameEndState(BaseState):
     def enter(self, **params) -> None:
         
         pygame.mixer.music.load(
-            settings.BASE_DIR / "assets" / "sounds" / "game-over.mp3"
+            settings.BASE_DIR / "assets" / "sounds" / "gameover.mp3"
         )
         pygame.mixer.music.play(loops=-1)
         
