@@ -1,23 +1,20 @@
-import pygame
-from typing import TypeVar, Dict, Any, Tuple
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
 
+Developed at: November 2024
+"""
+
+import pygame
 from gale.state import StateMachine, BaseState
+
 from src import mixins
 import settings
 
 
 class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin):
-    def __init__(
-        self,
-        x: float,
-        y: float,
-        width: float,
-        height: float,
-        texture_id: str,
-        states: Dict[str, BaseState],
-        animation_defs: Dict[str, Dict[str, Any]],
-        zoom_scale: float = 0.8,
-    ) -> None:
+    def __init__(self, x, y, width, height, texture_id, states, animation_defs, zoom_scale = 0.8):
         self.x = x
         self.y = y
         self.width = width * zoom_scale
@@ -35,14 +32,12 @@ class Player(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin)
         self.flash_timer = 0
         self.item = None
         self.shape_counter = 0
-        self.zoom_scale: float = zoom_scale
+        self.zoom_scale = zoom_scale
 
-    def change_state(
-        self, state_id: str, *args: Tuple[Any], **kwargs: Dict[str, Any]
-    ) -> None:
+    def change_state(self, state_id, *args, **kwargs):
         self.state_machine.change(state_id, *args, **kwargs)
 
-    def update(self, dt: float) -> None:
+    def update(self, dt):
 
         self.state_machine.update(dt)
         mixins.AnimatedMixin.update(self, dt)

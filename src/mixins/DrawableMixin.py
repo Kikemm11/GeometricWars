@@ -1,9 +1,15 @@
+"""
+Author: Alejandro Mujica
+alejandro.j.mujic4@gmail.com
+
+This file contains the AnimatedMixin.
+"""
+
 import pygame
 import settings
 
-
 class DrawableMixin:
-    def render(self, surface: pygame.Surface, zoom_scale=1) -> None:
+    def render(self, surface, zoom_scale=1):
         texture = settings.TEXTURES[self.texture_id]
         frame = settings.FRAMES[self.texture_id][self.frame_index]
         image = pygame.Surface((frame.width, frame.height), pygame.SRCALPHA)

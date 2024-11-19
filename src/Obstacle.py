@@ -1,3 +1,11 @@
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
+
+Developed at: November 2024
+"""
+
 import pygame
 import settings
 
@@ -15,5 +23,5 @@ class Obstacle():
     def render(self, surface):
         surface.blit(self.texture, (self.x, self.y), self.frame)
 
-    def get_collision_rect(self) -> pygame.Rect:
+    def get_collision_rect(self):
         return pygame.Rect(self.x, self.y, self.width, self.height)

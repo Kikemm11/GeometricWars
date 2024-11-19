@@ -1,3 +1,11 @@
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
+
+Developed at: November 2024
+"""
+
 from states.player_states.square_player_states.IdleRight import IdleRight
 from states.player_states.square_player_states.IdleLeft import IdleLeft
 from states.player_states.square_player_states.IdleUp import IdleUp

@@ -5,12 +5,12 @@ import settings
 
 
 class WalkLeft(BaseEntityState):
-    def enter(self) -> None:
+    def enter(self):
         self.entity.vx = settings.PLAYER_VX * -1
         self.entity.vy = 0
         self.entity.change_animation("walk-left")
 
-    def on_input(self, input_id: str, input_data: InputData) -> None:
+    def on_input(self, input_id, input_data):
         if input_id == "move_left" and input_data.released:
             self.entity.change_state("idle-left")
         elif input_id == "move_right" and input_data.pressed:

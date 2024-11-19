@@ -1,3 +1,11 @@
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
+
+Developed at: November 2024
+"""
+
 from src.Player import Player
 from src.states.player_states.circle_player_states import (
     IdleRight,
@@ -17,7 +25,7 @@ from src.ProjectileFactory import ProjectileFactory
 
 
 class CirclePlayer(Player):
-    def __init__(self, x: int, y: int, collision_px_reduction=0) -> None:
+    def __init__(self, x, y, collision_px_reduction=0):
         self.collision_px_reduction = collision_px_reduction
         super().__init__(
             x,
@@ -56,7 +64,7 @@ class CirclePlayer(Player):
             if input_id == "circle_throw" and input_data.pressed:
                 ProjectileFactory.throw_projectile(map, self)
 
-    def get_collision_rect(self) -> pygame.Rect:
+    def get_collision_rect(self):
         return pygame.Rect(
             self.x + self.collision_px_reduction,
             self.y + self.collision_px_reduction,
@@ -79,5 +87,5 @@ class CirclePortal:
     def render(self, surface):
         surface.blit(self.texture, (self.x, self.y), self.frame)
 
-    def get_collision_rect(self) -> pygame.Rect:
+    def get_collision_rect(self):
         return pygame.Rect(self.x, self.y, self.size, self.size)

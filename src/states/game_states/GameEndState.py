@@ -1,3 +1,11 @@
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
+
+Developed at: November 2024
+"""
+
 import pygame
 
 from gale.input_handler import InputData
@@ -11,7 +19,7 @@ from src.SquarePlayer import SquarePlayer
 
 
 class GameEndState(BaseState):
-    def enter(self, **params) -> None:
+    def enter(self, **params):
         
         pygame.mixer.music.load(
             settings.BASE_DIR / "assets" / "sounds" / "gameover.mp3"
@@ -27,7 +35,7 @@ class GameEndState(BaseState):
 
         self.selected = 1
 
-    def render(self, surface: pygame.Surface) -> None:
+    def render(self, surface):
 
         surface.blit(settings.TEXTURES["background"], (0, 0))
 
@@ -83,7 +91,7 @@ class GameEndState(BaseState):
             center=True,
         )
 
-    def on_input(self, input_id: str, input_data: InputData) -> None:
+    def on_input(self, input_id, input_data):
         if input_id == "move_down" and input_data.pressed:
             self.selected = 2 if self.selected == 1 else 1
             settings.SOUNDS["select"].stop()
@@ -101,6 +109,6 @@ class GameEndState(BaseState):
             else:
                 self.state_machine.change("start")
 
-    def exit(self) -> None:
+    def exit(self):
         pygame.mixer.music.stop()
         pygame.mixer.music.unload()

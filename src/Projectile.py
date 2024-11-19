@@ -1,18 +1,24 @@
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
+
+Developed at: November 2024
+"""
+
 import pygame
 from gale.input_handler import InputData
 
 from gale.state import StateMachine, BaseState
 from src import mixins
 
-from src.states.projectile_states import ThrowUpState, ThrowDownState, ThrowLeftState, ThrowRightState
 from src.Obstacle import Obstacle
 
 import settings
 
 
 class Projectile(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMixin):
-    def __init__(self, x, y) -> None:
-        
+    def __init__(self, x, y): 
         self.x = x
         self.y = y
         self.vx = settings.PROJECTILE_VELOCITY
@@ -25,22 +31,12 @@ class Projectile(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMi
             "throw": {"frames": [0, 1, 2], "interval": 0.2},
         }
 
-        states = {
-                "throw-up": lambda sm: ThrowUpState.ThrowUpState(self, sm),
-                "throw-down": lambda sm: ThrowDownState.ThrowDownState(self, sm),
-                "throw-left": lambda sm: ThrowLeftState.ThrowLeftState(self, sm),
-                "throw-right": lambda sm: ThrowRightState.ThrowRightState(self, sm),
-            }
-
-
-        self.state_machine = StateMachine(states)
-
         self.current_animation = None
         self.animations = {}
         self.generate_animations(animation_defs)
     
 
-    def update(self, dt, collidable_objects, map) -> None:
+    def update(self, dt, collidable_objects, map):
         
         mixins.AnimatedMixin.update(self, dt)
 
@@ -52,12 +48,9 @@ class Projectile(mixins.DrawableMixin, mixins.AnimatedMixin, mixins.CollidableMi
                 self.on_collide(object, map)
 
 
-    def get_collision_rect(self) -> pygame.Rect:
+    def get_collision_rect(self):
         return pygame.Rect(self.x, self.y, self.size, self.size)
-    
-    def change_state(
-        self, state_id: str, *args, **kwargs) -> None:
-        self.state_machine.change(state_id, *args, **kwargs)
+
 
     def on_collide(self, object, map):
         if isinstance(object, Obstacle):

@@ -1,7 +1,15 @@
-from typing import TypeVar
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
 
+Developed at: November 2024
+"""
+
+import pygame
 from gale.input_handler import InputData
 
+from src.ProjectileFactory import ProjectileFactory
 from src.Player import Player
 from src.states.player_states.square_player_states import (
     IdleRight,
@@ -14,14 +22,11 @@ from src.states.player_states.square_player_states import (
     WalkDown,
 )
 
-import pygame
 import settings
-
-from src.ProjectileFactory import ProjectileFactory
 
 
 class SquarePlayer(Player):
-    def __init__(self, x: int, y: int, collision_px_reduction=0) -> None:
+    def __init__(self, x, y, collision_px_reduction=0):
         self.collision_px_reduction = collision_px_reduction
         super().__init__(
             x,
@@ -51,16 +56,16 @@ class SquarePlayer(Player):
             },
         )
 
-    def on_input(self, input_id: str, input_data: InputData) -> None:
+    def on_input(self, input_id, input_data):
         if not self.vulnerable:
             self.state_machine.on_input(input_id, input_data)
 
-    def on_input_throw(self, input_id, input_data, map) -> None:
+    def on_input_throw(self, input_id, input_data, map):
         if not self.vulnerable:
             if input_id == "square_throw" and input_data.pressed:
                 ProjectileFactory.throw_projectile(map, self)
 
-    def get_collision_rect(self) -> pygame.Rect:
+    def get_collision_rect(self):
         return pygame.Rect(
             self.x + self.collision_px_reduction,
             self.y + self.collision_px_reduction,
@@ -80,5 +85,5 @@ class SquarePortal:
     def render(self, surface):
         surface.blit(self.texture, (self.x, self.y), self.frame)
 
-    def get_collision_rect(self) -> pygame.Rect:
+    def get_collision_rect(self):
         return pygame.Rect(self.x, self.y, self.size, self.size)

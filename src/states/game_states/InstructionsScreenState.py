@@ -1,17 +1,24 @@
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
+
+Developed at: November 2024
+"""
+
 import pygame
 
 from gale.input_handler import InputData
 from gale.state import BaseState
 from gale.text import Text, render_text
 
+import settings
 
 pygame.mixer.init()
 
-import settings
-
 
 class InstructionsState(BaseState):
-    def enter(self, text_color=pygame.Color(255, 255, 255)) -> None:
+    def enter(self, text_color=pygame.Color(255, 255, 255)):
         self.text_color = text_color
         
         pygame.mixer.music.load(
@@ -20,7 +27,7 @@ class InstructionsState(BaseState):
         pygame.mixer.music.play(loops=-1)
         
 
-    def render(self, surface: pygame.Surface) -> None:
+    def render(self, surface):
 
         surface.blit(settings.TEXTURES["background"], (0, 0))
 
@@ -112,10 +119,10 @@ class InstructionsState(BaseState):
             shadowed=True,
         )
 
-    def on_input(self, input_id: str, input_data: InputData) -> None:
+    def on_input(self, input_id, input_data):
         if input_id == "enter" and input_data.pressed:
             self.state_machine.change("start")
 
-    def exit(self) -> None:
+    def exit(self):
         pygame.mixer.music.stop()
         pygame.mixer.music.unload()

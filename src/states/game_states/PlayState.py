@@ -1,21 +1,29 @@
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
+
+Developed at: November 2024
+"""
+
 import pygame
 
 from gale.input_handler import InputData
 from gale.state import BaseState
 from gale.text import Text, render_text
 
-pygame.mixer.init()
-
 import settings
+
 from src.Player import Player
 from src.Map import Map
 from src.CirclePlayer import CirclePlayer
 from src.SquarePlayer import SquarePlayer
 
+pygame.mixer.init()
 
 class PlayState(BaseState):
 
-    def enter(self) -> None:
+    def enter(self):
         pygame.mixer.music.load(
             settings.BASE_DIR / "assets" / "sounds" / "game.mp3"
         )
@@ -87,7 +95,7 @@ class PlayState(BaseState):
                 settings.SOUNDS["hurt"].play()
                 continue
 
-    def render(self, surface: pygame.Surface) -> None:
+    def render(self, surface):
         self.map.render(surface)
         self.circle_player.render(surface)
         self.square_player.render(surface)
@@ -122,7 +130,7 @@ class PlayState(BaseState):
             center=True,
         )
 
-    def on_input(self, input_id: str, input_data: InputData) -> None:
+    def on_input(self, input_id, input_data):
         self.circle_player.on_input(input_id, input_data)
         self.circle_player.on_input_throw(input_id, input_data, self.map)
 
@@ -170,6 +178,6 @@ class PlayState(BaseState):
         elif self.circle_player.shape_counter >= settings.ITEMS:
             self.state_machine.change("game-over", player=self.circle_player)
 
-    def exit(self) -> None:
+    def exit(self):
         pygame.mixer.music.stop()
         pygame.mixer.music.unload()

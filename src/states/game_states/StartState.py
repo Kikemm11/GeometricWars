@@ -1,3 +1,11 @@
+"""
+Authors: 
+- Ivan Maldonado (Kikemaldonado11@gmail.com)
+- Juan Gomez (juan.andres.gomezp@gmail.com)
+
+Developed at: November 2024
+"""
+
 import pygame
 
 from gale.input_handler import InputData
@@ -5,6 +13,7 @@ from gale.state import BaseState
 from gale.text import Text, render_text
 
 import settings
+
 from src.Player import Player
 from src.CirclePlayer import CirclePlayer
 from src.SquarePlayer import SquarePlayer
@@ -12,7 +21,7 @@ from src.SquarePlayer import SquarePlayer
 
 class StartState(BaseState):
 
-    def enter(self) -> None:
+    def enter(self):
         
         pygame.mixer.music.load(
             settings.BASE_DIR / "assets" / "sounds" / "menu.mp3"
@@ -41,13 +50,13 @@ class StartState(BaseState):
 
     
 
-    def update(self, dt: float) -> None:
+    def update(self, dt):
         self.circle_player.update(dt)
         self.square_player.update(dt)
 
         self.erratic_players(self.circle_player, self.square_player)
 
-    def render(self, surface: pygame.Surface) -> None:
+    def render(self, surface):
 
         surface.blit(settings.TEXTURES["background"], (0, 0))
 
@@ -88,7 +97,7 @@ class StartState(BaseState):
         self.circle_player.render(surface)
         self.square_player.render(surface)
 
-    def on_input(self, input_id: str, input_data: InputData) -> None:
+    def on_input(self, input_id, input_data):
         if input_id == "move_down" and input_data.pressed:
             self.selected = 2 if self.selected == 1 else 1
             settings.SOUNDS["select"].stop()
@@ -107,12 +116,12 @@ class StartState(BaseState):
                 self.state_machine.change("instructions")
                 
                 
-    def exit(self) -> None:
+    def exit(self):
         pygame.mixer.music.stop()
         pygame.mixer.music.unload()
         
 
-    def erratic_players(self, circle_player: Player, square_player: Player):
+    def erratic_players(self, circle_player, square_player):
 
         if (
             circle_player.vx > 0
